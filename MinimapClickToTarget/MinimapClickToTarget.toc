@@ -1,0 +1,6 @@
+## Interface: 11505
+## Title: MinimapClickToTarget
+## Notes: Allows you to double-click tracking pips on the minimap to target players.
+## Author: Severussnipe <Redridge Police>
+MinimapClickToTarget.xml
+MinimapClickToTarget.lua
