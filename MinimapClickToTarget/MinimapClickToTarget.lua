@@ -95,7 +95,7 @@ local function square_map_click_target()
             if not player_is_already_targeted(player_name) then
                 -- DEFAULT_CHAT_FRAME:AddMessage("Player name "..player_name)
                 targetBtn:ClearAllPoints()
-                targetBtn:SetPoint("CENTER", UIParent, 0, -250)
+                targetBtn:SetPoint("CENTER", Minimap, 0, 0)
                 targetBtn:SetWidth(140)
                 targetBtn:SetHeight(140)
                 targetBtn:SetAttribute("macrotext", "/targetexact " .. player_name)
