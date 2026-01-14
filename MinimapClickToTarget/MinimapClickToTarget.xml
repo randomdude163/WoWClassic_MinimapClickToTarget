@@ -5,9 +5,13 @@
         <HighlightTexture file="Interface\CharacterFrame\BarFill.blp" alphaMode="ADD" setAllPoints="true" hidden="true"/>
         <Scripts>
             <OnLoad>
-                self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+                self:RegisterForClicks("AnyDown", "AnyUp");
+                -- Modern clients expect the button-specific attribute names (type1/macrotext1)
+                -- when handling LeftButton clicks.
+                self:SetAttribute("type", "macro");
                 self:SetAttribute("type1", "macro");
                 self:SetAttribute("macrotext", "/targetexact nil");
+                self:SetAttribute("macrotext1", "/targetexact nil");
             </OnLoad>
         </Scripts>
     </Button>

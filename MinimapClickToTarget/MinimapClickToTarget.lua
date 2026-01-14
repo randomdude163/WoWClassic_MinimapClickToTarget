@@ -5,6 +5,10 @@
 
 local targetBtn = CreateFrame("Button", "targetBtn", UIParent, "MinimapClickToTargetSecureActionButtonTemplate")
 
+-- Make sure the secure button is actually clickable in newer clients.
+targetBtn:EnableMouse(true)
+targetBtn:RegisterForClicks("AnyDown", "AnyUp")
+
 local RARE_MOB_NAMES = {
     "Ribchaser",
     "Piggiesmalls",
@@ -95,10 +99,16 @@ local function square_map_click_target()
             if not player_is_already_targeted(player_name) then
                 -- DEFAULT_CHAT_FRAME:AddMessage("Player name "..player_name)
                 targetBtn:ClearAllPoints()
-                targetBtn:SetPoint("CENTER", Minimap, 0, 0)
-                targetBtn:SetWidth(140)
-                targetBtn:SetHeight(140)
-                targetBtn:SetAttribute("macrotext", "/targetexact " .. player_name)
+                targetBtn:SetParent(Minimap)
+                targetBtn:SetAllPoints(Minimap)
+                targetBtn:SetFrameStrata("TOOLTIP")
+                targetBtn:SetFrameLevel((Minimap:GetFrameLevel() or 0) + 50)
+
+                targetBtn:SetAttribute("type", "macro")
+                targetBtn:SetAttribute("type1", "macro")
+                local macro = "/targetexact " .. player_name .. "\n/target " .. player_name
+                targetBtn:SetAttribute("macrotext", macro)
+                targetBtn:SetAttribute("macrotext1", macro)
                 targetBtn:Show()
                 C_Timer.After(0.4, function() targetBtn:Hide() end)
 
@@ -178,7 +188,7 @@ local function square_map_setup()
             if IsShiftKeyDown() then -- Shift click to send ping
                 Minimap_OnClick(frame, button)
             else
-                square_map_click_target(button)
+                square_map_click_target()
             end
         else
             Minimap_OnClick(frame, button)
