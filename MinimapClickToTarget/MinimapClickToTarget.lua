@@ -84,6 +84,11 @@ end
 
 
 local function square_map_click_target()
+    -- Prevent secure button changes in combat (would trigger "Interface action failed..." warnings).
+    if InCombatLockdown and InCombatLockdown() then
+        return
+    end
+
     local tooltip_text = GameTooltipTextLeft1:GetText()
     if not tooltip_text then
         return
