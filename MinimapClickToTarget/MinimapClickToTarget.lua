@@ -110,7 +110,7 @@ end
 
 
 local function hide_minimap_clock_frame()
-    LoadAddOn("Blizzard_TimeManager")
+    C_AddOns.LoadAddOn("Blizzard_TimeManager")
     local region = TimeManagerClockButton:GetRegions()
     region:Hide()
     TimeManagerClockButton:Hide()
