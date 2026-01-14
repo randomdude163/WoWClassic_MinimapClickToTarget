@@ -16,6 +16,8 @@
     ],
     "Lua.diagnostics.globals": [
         "TimeManagerClockButton",
-        "GameTooltipTextLeft1"
+        "GameTooltipTextLeft1",
+        "UIErrorsFrame",
+        "DEFAULT_CHAT_FRAME"
     ]
 }

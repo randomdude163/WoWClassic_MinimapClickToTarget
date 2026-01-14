@@ -126,6 +126,61 @@ local function hide_minimap_clock_frame()
     TimeManagerClockButton:Hide()
 end
 
+local function hard_hide_frame(frame)
+    if not frame then
+        return
+    end
+
+    if frame.UnregisterAllEvents then
+        frame:UnregisterAllEvents()
+    end
+
+    frame:Hide()
+    frame:SetAlpha(0)
+    if frame.EnableMouse then
+        frame:EnableMouse(false)
+    end
+    if frame.SetScript then
+        frame:SetScript("OnShow", frame.Hide)
+    end
+end
+
+local function hide_minimap_title_and_close_button()
+    -- Some Anniversary-era clients add title/close frames near the default minimap position.
+    -- These frames can be separate from the older zone text button / toggle button.
+    hard_hide_frame(_G.MinimapTitle)
+    hard_hide_frame(_G.MinimapCloseButton)
+
+    if not _G.MinimapCluster then
+        return
+    end
+
+    -- Prefer explicit known fields when present.
+    hard_hide_frame(_G.MinimapCluster.MinimapTitle)
+    hard_hide_frame(_G.MinimapCluster.MinimapCloseButton)
+
+    -- Border frame/texture pieces (e.g. "MinimapCluster.BorderTop" in Anniversary).
+    hard_hide_frame(_G.MinimapCluster.BorderTop)
+    hard_hide_frame(_G.MinimapCluster.BorderBottom)
+    hard_hide_frame(_G.MinimapCluster.BorderLeft)
+    hard_hide_frame(_G.MinimapCluster.BorderRight)
+    hard_hide_frame(_G.MinimapCluster.Border)
+
+    -- Fallback: scan children for title/close-like frames.
+    local children = { _G.MinimapCluster:GetChildren() }
+    for _, child in ipairs(children) do
+        local name = child and child.GetName and child:GetName()
+        if name and (
+            name:find("MinimapTitle") or
+            name:find("MinimapClose") or
+            name:find("CloseButton") or
+            name:find("Border")
+        ) then
+            hard_hide_frame(child)
+        end
+    end
+end
+
 local function hide_unwanted_minimap_elements()
     local hideAll = {
         "MinimapBorder",         -- Outer border
@@ -148,6 +203,7 @@ local function hide_unwanted_minimap_elements()
 
     Minimap:SetStaticPOIArrowTexture("") -- remove arrow that points to nearest town
     hide_minimap_clock_frame()
+    hide_minimap_title_and_close_button()
 end
 
 local function enable_scroll_wheel_zooming()

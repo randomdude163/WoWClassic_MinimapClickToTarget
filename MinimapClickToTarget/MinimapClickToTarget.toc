@@ -1,4 +1,4 @@
-## Interface: 11508
+## Interface: 11508, 20505
 ## Title: MinimapClickToTarget
 ## Notes: Allows you to double-click tracking pips on the minimap to target players.
 ## Author: Severussnipe <Redridge Police>
